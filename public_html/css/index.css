@@ -1,0 +1,74 @@
+/* Fuente principal */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
+    flex-direction: column;
+    text-align: center;
+}
+
+/* Título grande con sombra */
+h1 {
+    font-size: 4rem;
+    margin-bottom: 3rem;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+}
+
+/* Contenedor de botones */
+.botones {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+/* Botones con animación y sombras */
+button {
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0px 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Botón Inicia Sesión */
+button#botonLogin {
+    background: linear-gradient(to right, #ff416c, #ff4b2b);
+    color: #fff;
+}
+
+/* Botón Busca Habitación */
+button#botonBuscar {
+    background: linear-gradient(to right, #1fa2ff, #12d8fa);
+    color: #fff;
+}
+
+/* Efecto hover */
+button:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0px 8px 20px rgba(0,0,0,0.3);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    .botones {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    button {
+        width: 200px;
+    }
+}
