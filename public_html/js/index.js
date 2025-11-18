@@ -35,7 +35,7 @@ function crearBD() {
 
         // Tabla Habitacion
         const habitacionStore = db.createObjectStore("Habitacion", { keyPath: "idhabitacion", autoIncrement: true });
-        habitacionStore.createIndex("direccion", "direccion", { unique: false });
+        habitacionStore.createIndex("ciudad", "ciudad", { unique: false });
         habitacionStore.createIndex("latitud", "latitud", { unique: false });
         habitacionStore.createIndex("longitud", "longitud", { unique: false });
         habitacionStore.createIndex("precio", "precio", { unique: false });
@@ -43,20 +43,20 @@ function crearBD() {
         habitacionStore.createIndex("emailPropietario", "emailPropietario", { unique: false });
         
         //14 habitaciones
-        habitacionStore.add({direccion: "Vitoria", latitud: 42.846, longitud: -2.672, precio: 350, imagen: "", emailPropietario: "ana@mail.com"});
-        habitacionStore.add({direccion: "Vitoria", latitud: 42.846, longitud: -2.672, precio: 360, imagen: "", emailPropietario: "iker@mail.com"});
-        habitacionStore.add({direccion: "Vitoria", latitud: 42.846, longitud: -2.672, precio: 370, imagen: "", emailPropietario: "maria@mail.com"});
-        habitacionStore.add({direccion: "Vitoria", latitud: 42.846, longitud: -2.672, precio: 380, imagen: "", emailPropietario: "jon@mail.com"});
-        habitacionStore.add({direccion: "Vitoria", latitud: 42.846, longitud: -2.672, precio: 390, imagen: "", emailPropietario: "laura@mail.com"});
-        habitacionStore.add({direccion: "Vitoria", latitud: 42.846, longitud: -2.672, precio: 400, imagen: "", emailPropietario: "david@mail.com"});
-        habitacionStore.add({direccion: "Vitoria", latitud: 42.846, longitud: -2.672, precio: 410, imagen: "", emailPropietario: "sofia@mail.com"});
-        habitacionStore.add({direccion: "Vitoria", latitud: 42.846, longitud: -2.672, precio: 420, imagen: "", emailPropietario: "pablo@mail.com"});
-        habitacionStore.add({direccion: "Vitoria", latitud: 42.846, longitud: -2.672, precio: 430, imagen: "", emailPropietario: "ana@mail.com"});
-        habitacionStore.add({direccion: "Vitoria", latitud: 42.846, longitud: -2.672, precio: 440, imagen: "", emailPropietario: "iker@mail.com"});
-        habitacionStore.add({direccion: "Bilbao", latitud: 43.263, longitud: -2.935, precio: 480, imagen: "", emailPropietario: "maria@mail.com"});
-        habitacionStore.add({direccion: "Bilbao", latitud: 43.265, longitud: -2.939, precio: 520, imagen: "", emailPropietario: "jon@mail.com"});
-        habitacionStore.add({direccion: "Donosti", latitud: 43.317, longitud: -1.986, precio: 600, imagen: "", emailPropietario: "laura@mail.com"});
-        habitacionStore.add({direccion: "Donosti", latitud: 43.316, longitud: -1.981, precio: 580, imagen: "", emailPropietario: "sofia@mail.com"});
+        habitacionStore.add({ciudad: "Vitoria", latitud: 42.846, longitud: -2.672, precio: 350, imagen: "", emailPropietario: "ana@mail.com"});
+        habitacionStore.add({ciudad: "Vitoria", latitud: 42.846, longitud: -2.672, precio: 360, imagen: "", emailPropietario: "iker@mail.com"});
+        habitacionStore.add({ciudad: "Vitoria", latitud: 42.846, longitud: -2.672, precio: 370, imagen: "", emailPropietario: "maria@mail.com"});
+        habitacionStore.add({ciudad: "Vitoria", latitud: 42.846, longitud: -2.672, precio: 380, imagen: "", emailPropietario: "jon@mail.com"});
+        habitacionStore.add({ciudad: "Vitoria", latitud: 42.846, longitud: -2.672, precio: 390, imagen: "", emailPropietario: "laura@mail.com"});
+        habitacionStore.add({ciudad: "Vitoria", latitud: 42.846, longitud: -2.672, precio: 400, imagen: "", emailPropietario: "david@mail.com"});
+        habitacionStore.add({ciudad: "Vitoria", latitud: 42.846, longitud: -2.672, precio: 410, imagen: "", emailPropietario: "sofia@mail.com"});
+        habitacionStore.add({ciudad: "Vitoria", latitud: 42.846, longitud: -2.672, precio: 420, imagen: "", emailPropietario: "pablo@mail.com"});
+        habitacionStore.add({ciudad: "Vitoria", latitud: 42.846, longitud: -2.672, precio: 430, imagen: "", emailPropietario: "ana@mail.com"});
+        habitacionStore.add({ciudad: "Vitoria", latitud: 42.846, longitud: -2.672, precio: 440, imagen: "", emailPropietario: "iker@mail.com"});
+        habitacionStore.add({ciudad: "Bilbao", latitud: 43.263, longitud: -2.935, precio: 480, imagen: "", emailPropietario: "maria@mail.com"});
+        habitacionStore.add({ciudad: "Bilbao", latitud: 43.265, longitud: -2.939, precio: 520, imagen: "", emailPropietario: "jon@mail.com"});
+        habitacionStore.add({ciudad: "Donosti", latitud: 43.317, longitud: -1.986, precio: 600, imagen: "", emailPropietario: "laura@mail.com"});
+        habitacionStore.add({ciudad: "Donosti", latitud: 43.316, longitud: -1.981, precio: 580, imagen: "", emailPropietario: "sofia@mail.com"});
 
 
 
@@ -81,9 +81,7 @@ function crearBD() {
         //solicitudes
         solicitudStore.add({idhabitacion: 1, emailInquilinoPosible: "iker@mail.com"});
         solicitudStore.add({idhabitacion: 3, emailInquilinoPosible: "sofia@mail.com"});
-        solicitudStore.add({idhabitacion: 5, emailInquilinoPosible: "pablo@mail.com"});
-
-        
+        solicitudStore.add({idhabitacion: 5, emailInquilinoPosible: "pablo@mail.com"});  
     };
 }
 
@@ -96,6 +94,6 @@ function configurarBotones() {
     });
 
     botonLogin.addEventListener('click', () => {
-        window.location.href = 'inicioSesion.html';
+        window.location.href = 'login.html';
     });
 }

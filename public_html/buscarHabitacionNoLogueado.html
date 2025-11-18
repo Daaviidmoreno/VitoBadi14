@@ -1,15 +1,49 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar habitación</title>
+    <link rel="stylesheet" href="css/buscarNoLogueado.css">
+</head>
+
+<body>
+    <header>
+        <h2>Buscar habitación</h2>
+        <button id="btnLogin">Login</button>
+    </header>
+
+    <main>
+        <div class="filtros">
+            <label for="ciudad">Ciudad:</label>
+            <select id="ciudad">
+                <option value="">-- Selecciona ciudad --</option>
+                <option value="Vitoria">Vitoria</option>
+                <option value="Bilbao">Bilbao</option>
+                <option value="Donosti">Donosti</option>
+            </select>
+
+            <label for="fecha">Fecha de entrada:</label>
+            <input type="date" id="fecha">
+
+            <button id="btnBuscar">Buscar</button>
+        </div>
+
+        <!-- CONTENEDOR DE RESULTADOS -->
+        <div id="resultados" class="resultados"></div>
+
+        <!-- ⭐ TEMPLATE ESTÁTICO QUE EL JS DUPLICA -->
+        <template id="templateHabitacion">
+            <div class="card">
+                <h1 class="hab-id"></h1>
+                <p><strong>Ciudad:</strong> <span class="hab-ciudad"></span></p>
+                <p><strong>Precio:</strong> <span class="hab-precio"></span> €</p>
+                <button class="btnDetalles">Ver detalles</button>
+            </div>
+        </template>
+
+    </main>
+
+    <script src="js/buscarHabitacionnoLogueado.js" defer></script>
+</body>
 </html>
