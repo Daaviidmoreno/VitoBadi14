@@ -4,6 +4,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     document.getElementById("btnBuscar").addEventListener("click", buscarHabitaciones);
+
+    document.getElementById("btnAtras").addEventListener("click", () => {
+        window.history.back();
+    });
+
 });
 
 function buscarHabitaciones() {
@@ -12,7 +17,7 @@ function buscarHabitaciones() {
 
     const req = indexedDB.open("VitoBadi14");
 
-    req.onsuccess = function(event) {
+    req.onsuccess = function (event) {
         const db = event.target.result;
         const tx = db.transaction("Habitacion", "readonly");
         const store = tx.objectStore("Habitacion");

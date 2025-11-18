@@ -6,6 +6,10 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         validarLogin();
     });
+
+    document.getElementById("btnAtras").addEventListener("click", () => {
+        window.history.back();
+    });
 });
 
 function validarLogin() {

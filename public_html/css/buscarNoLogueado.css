@@ -7,12 +7,19 @@ body {
 
 header {
     width: 100%;
-    padding: 15px 20px;
+    padding: 15px 40px; /* más espacio a los lados */
     background: #667eea;
     color: #fff;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between; /* separa título de botones */
+    box-sizing: border-box;
+}
+
+/* Contenedor de botones */
+header .header-botones {
+    display: flex;
+    gap: 15px;      /* espacio entre botones */
 }
 
 header button {
@@ -22,8 +29,14 @@ header button {
     color: #fff;
     border-radius: 10px;
     cursor: pointer;
-    margin-right: 30px; /* ⭐ hace que no esté pegado a la derecha */
 }
+
+header button:hover {
+    transform: scale(1.05);
+    transition: 0.3s;
+}
+
+
 
 main {
     padding: 20px;

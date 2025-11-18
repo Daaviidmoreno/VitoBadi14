@@ -1,64 +1,83 @@
 body {
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Roboto', sans-serif;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: #fff;
+    background: #f2f2f2;
 }
 
-.login-container {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 40px;
-    border-radius: 15px;
-    backdrop-filter: blur(10px);
-    width: 320px;
-    text-align: center;
-}
-
-h1 {
-    margin-bottom: 25px;
-}
-
-label {
-    display: block;
-    text-align: left;
-    margin-top: 10px;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-input {
+header {
     width: 100%;
-    padding: 10px;
-    border-radius: 10px;
-    border: none;
-    margin-bottom: 15px;
+    padding: 15px 40px;
+    display: flex;
+    justify-content: flex-end; /* botón a la derecha */
+    background: #667eea;
     box-sizing: border-box;
 }
 
-button {
-    margin-top: 10px;
-    width: 100%;
-    padding: 12px;
-    background: linear-gradient(to right, #1fa2ff, #12d8fa);
+header button {
+    background: #ff416c;
     border: none;
+    padding: 10px 20px;
+    color: #fff;
     border-radius: 10px;
-    color: black;
-    font-weight: bold;
     cursor: pointer;
+}
+
+header button:hover {
+    transform: scale(1.05);
     transition: 0.3s;
 }
 
-button:hover {
-    transform: scale(1.05);
+.login-container {
+    max-width: 400px;
+    margin: 50px auto;
+    background: #fff;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0px 5px 15px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.login-container h1 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.login-container label {
+    display: block;
+    margin-top: 15px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.login-container input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.login-container button#btnAceptar {
+    margin-top: 20px;
+    width: 100%;
+    background: #1fa2ff;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.login-container button#btnAceptar:hover {
+    transform: scale(1.03);
+    transition: 0.3s;
 }
 
 .error {
-    color: #ff6961;
+    color: red;
+    margin-top: 10px;
     font-weight: bold;
-    margin-bottom: 10px;
 }
