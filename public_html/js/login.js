@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("formLogin");
-    const msg = document.getElementById("mensajeError");
 
     form.addEventListener("submit", function (e) {
         e.preventDefault();
@@ -24,7 +23,6 @@ function validarLogin() {
         const tx = db.transaction("Usuario", "readonly");
         const store = tx.objectStore("Usuario");
 
-        // Buscamos el usuario por email
         const buscar = store.get(emailInput);
 
         buscar.onsuccess = function () {
@@ -41,8 +39,14 @@ function validarLogin() {
                 return;
             }
 
-            // Usuario y contraseña correctos
+            // Usuario correcto
             msg.textContent = "";
+
+
+            sessionStorage.setItem("usuarioLogueado", JSON.stringify(usuario));
+
+
+            // Ir a principal
             window.location.href = "principal.html";
         };
 

@@ -1,0 +1,56 @@
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: #f5f5f5;
+}
+
+.top-header {
+    width: 100%;
+    padding: 15px 40px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #667eea;
+    color: white;
+}
+
+/* Título a la izquierda */
+.titulo {
+    margin: 0;
+    font-size: 22px;
+}
+
+/* Contenedor del saludo y foto */
+.info-usuario {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto;
+    margin-right: 30px;
+}
+
+/* Foto redonda */
+.foto-usuario {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+}
+
+/* Logout */
+.logout {
+    background: #ff416c;
+    border: none;
+    padding: 10px 18px;
+    color: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.logout:hover {
+    transform: scale(1.05);
+    transition: 0.3s;
+}
