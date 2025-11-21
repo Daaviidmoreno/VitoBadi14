@@ -54,3 +54,65 @@ body {
     transform: scale(1.05);
     transition: 0.3s;
 }
+
+.main-content {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+/* Contenedor menu */
+.menu {
+    position: relative;
+}
+
+/* Botón principal del menú */
+.menu-btn {
+    padding: 12px 20px;
+    background: #4e60dd;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    min-width: 180px;
+}
+
+/* Submenú */
+.submenu {
+    display: none;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    background: white;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* Mostrar submenu al pasar por encima */
+.menu:hover .submenu {
+    display: block;
+}
+
+/* Botones dentro del submenu */
+.submenu button {
+    width: 100%;
+    padding: 10px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 8px;
+}
+
+.submenu button:hover {
+    background: #5569cb;
+}
