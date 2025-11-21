@@ -1,0 +1,72 @@
+body {
+    margin: 0;
+    background: #f5f5f5;
+    font-family: 'Roboto', sans-serif;
+}
+
+.top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background: #667eea;
+    color: white;
+}
+
+.botones-header button {
+    margin-left: 10px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.logout {
+    background: #ff416c;
+    color: white;
+}
+
+.contenedor {
+    width: 90%;
+    margin: 30px auto;
+}
+
+.filtros {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.buscar {
+    background: #4e60dd;
+    color: white;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+}
+
+.resultados {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.card {
+    width: 260px;
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.card p {
+    margin: 6px 0;
+}
