@@ -58,8 +58,8 @@ function buscarHabitaciones() {
                 habitaciones.push(hab);
                 cursor.continue();
             } else {
-                // FIN — ordenar por precio DESC
-                habitaciones.sort((a, b) => b.precio - a.precio);
+                
+                habitaciones.sort((a, b) => a.precio - b.precio);
                 mostrarResultados(habitaciones);
             }
         };

@@ -44,6 +44,7 @@ function crearBD() {
         habitacionStore.createIndex("emailPropietario", "emailPropietario", {unique: false});
 
         //14 habitaciones
+        //10 Vitoria
         habitacionStore.add({
             ciudad: "Vitoria",
             direccion: "Calle San Prudencio 5, Vitoria-Gasteiz",

@@ -20,12 +20,12 @@ function buscarHabitaciones() {
 
     const req = indexedDB.open("VitoBadi14");
 
-    req.onsuccess = function(event) {
+    req.onsuccess = function (event) {
         const db = event.target.result;
         const tx = db.transaction("Habitacion", "readonly");
         const store = tx.objectStore("Habitacion");
 
-        store.getAll().onsuccess = function(e) {
+        store.getAll().onsuccess = function (e) {
             let datos = e.target.result;
 
             // Filtrar por ciudad
@@ -39,7 +39,7 @@ function buscarHabitaciones() {
                 datos = datos.filter(h => !h.disponibleDesde || new Date(h.disponibleDesde) <= fechaBuscada);
             }
 
-            
+
             datos.sort((a, b) => a.precio - b.precio);
 
             mostrarResultados(datos);
@@ -52,7 +52,7 @@ function mostrarResultados(lista) {
     const template = document.getElementById("templateHabitacion");
 
 // limpia resultados previos
-    cont.innerHTML = ""; 
+    cont.innerHTML = "";
 
     if (lista.length === 0) {
         cont.innerHTML = "<h3>No hay resultados</h3>";
