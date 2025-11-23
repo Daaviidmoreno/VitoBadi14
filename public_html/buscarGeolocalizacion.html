@@ -7,60 +7,96 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/html.html to edit this
 <head>
     <link rel="icon" type="image/png" href="img/logo.png">
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Geolocalización</title>
     <link rel="stylesheet" href="css/buscarGenerica.css">
     <style>
-        /* Estilo para el control de radio */
-        .radio-group {
-            background: white; padding: 15px; border-radius: 8px; margin-bottom: 20px;
-            text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        /* Estilos específicos para el "mapa" simulado */
+        .mapa-container {
+            border: 2px solid #ccc;
+            background-color: #e8e8e8;
+            height: 300px;
+            position: relative;
+            margin-top: 20px;
+            border-radius: 8px;
+            overflow: hidden;
         }
-        .radio-group label { margin: 0 10px; cursor: pointer; }
-        
-        /* Estilo para el marcador de resultado */
-        .marcador {
-            border-left: 5px solid #ff416c; 
-            background: white;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        .punto-central {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px; height: 20px;
+            background-color: blue;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 0 5px rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+        .marcador-habitacion {
+            position: absolute;
+            width: 16px; height: 16px;
+            background-color: red;
+            border-radius: 50%;
+            border: 2px solid white;
             cursor: pointer;
             transition: transform 0.2s;
         }
-        .marcador:hover { transform: scale(1.02); }
+        .marcador-habitacion:hover {
+            transform: scale(1.5);
+            z-index: 20;
+        }
+        .radio-inputs {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+        }
     </style>
 </head>
 <body>
-    <header class="top-header">
-        <img src="img/logo.png" alt="Logo" class="logo">
-        <h2>Geolocalización</h2>
-        <div class="botones-header">
-            <button id="btnAtras">Atrás</button>
-            <button id="btnLogout" class="logout">Logout</button>
-        </div>
-    </header>
 
-    <main class="contenedor">
-        <div class="filtros" style="display:block;">
-            <div style="display:flex; gap:10px; margin-bottom:15px;">
-                <input type="text" id="direccionInput" placeholder="Ej: Facultad de Farmacia, Vitoria" style="flex-grow:1; padding:10px;">
-                <button id="btnBuscar" class="buscar">Buscar</button>
-            </div>
+<header class="top-header">
+    <img src="img/logo.png" alt="Logo" class="logo">
+    <h2>Geolocalización</h2>
+    <div class="botones-header">
+        <button id="btnAtras">Atrás</button>
+        <button id="btnLogout" class="logout">Logout</button>
+    </div>
+</header>
 
-            <div class="radio-group">
-                <strong>Radio (Km):</strong>
-                <input type="radio" name="radio" value="0.5" id="r05" checked><label for="r05">0.5</label>
-                <input type="radio" name="radio" value="1" id="r1"><label for="r1">1</label>
-                <input type="radio" name="radio" value="1.5" id="r15"><label for="r15">1.5</label>
-                <input type="radio" name="radio" value="2" id="r2"><label for="r2">2</label>
-            </div>
+<main class="contenedor">
+
+    <div class="filtros" style="display: block;">
+        <label>Dirección origen:</label>
+        <div style="display: flex; gap: 10px;">
+            <input type="text" id="direccionInput" placeholder="Ej: Facultad de Farmacia, Vitoria" style="flex: 1;">
+            <button id="btnBuscar" class="buscar">Buscar</button>
         </div>
 
-        <h3 id="statusBusqueda">Resultados cercanos:</h3>
-        <div id="listaResultados"></div>
-    </main>
+        <div class="radio-inputs">
+            <span>Radio (Km):</span>
+            <label><input type="radio" name="radio" value="0.5" checked> 0.5</label>
+            <label><input type="radio" name="radio" value="1"> 1.0</label>
+            <label><input type="radio" name="radio" value="1.5"> 1.5</label>
+            <label><input type="radio" name="radio" value="2"> 2.0</label>
+        </div>
+    </div>
 
-    <script src="js/buscarGeolocalizacion.js" defer></script>
+    <h3 id="estadoBusqueda" style="margin-top: 10px;">Resultados en el mapa:</h3>
+    
+    <div id="mapaSimulado" class="mapa-container">
+        <div class="punto-central" title="Tu ubicación"></div>
+        </div>
+
+    <div id="listaResultados" class="resultados" style="margin-top: 20px;"></div>
+
+</main>
+
+<script src="js/buscarGeolocalizacion.js" defer></script>
+
 </body>
 </html>
