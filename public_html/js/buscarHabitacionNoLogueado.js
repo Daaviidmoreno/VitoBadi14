@@ -34,7 +34,7 @@ function buscarHabitaciones() {
                 datos = datos.filter(h => !h.disponibleDesde || new Date(h.disponibleDesde) <= fechaBuscada);
             }
 
-            // Ordenar de mayor a menor precio
+            // Ordenar de menor a mayor precio
             datos.sort((a, b) => a.precio - b.precio);
 
             mostrarResultados(datos);
