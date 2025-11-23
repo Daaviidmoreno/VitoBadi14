@@ -1,0 +1,66 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f2f2f2;
+}
+
+.top-header {
+    background: #667eea;
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.botones-header button {
+    margin-left: 10px;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.logout {
+    background: #ff416c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+}
+
+.contenedor {
+    width: 400px;
+    margin: 40px auto;
+    padding: 25px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+
+.resultados {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0px 5px 15px rgba(0,0,0,0.1);
+}
+
+.imagen-container {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.hab-imagen {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: none; /* no borroso aquí, se muestra normal */
+}
