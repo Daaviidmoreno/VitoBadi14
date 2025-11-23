@@ -92,3 +92,20 @@ button#btnBuscar {
     border-radius: 10px;
     cursor: pointer;
 }
+
+.imagen-container {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.hab-imagen {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(6px);   /* ⭐ Imagen borrosa */
+    opacity: 0.85;
+}
+
