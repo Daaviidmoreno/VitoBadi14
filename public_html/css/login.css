@@ -7,19 +7,26 @@ body {
 
 header {
     width: 100%;
-    padding: 15px 40px;
+    padding: 12px 40px; /* un poco más pequeño que antes */
     display: flex;
-    justify-content: flex-end; /* botón a la derecha */
+    align-items: center;
+    justify-content: space-between; /* logo a la izquierda, botón a la derecha */
     background: #667eea;
     box-sizing: border-box;
 }
 
+header .logo {
+    height: 40px;
+    display: block;
+}
+
+/* Botón atrás */
 header button {
     background: #ff416c;
     border: none;
-    padding: 10px 20px;
+    padding: 8px 16px;
     color: #fff;
-    border-radius: 10px;
+    border-radius: 8px;
     cursor: pointer;
 }
 
@@ -27,6 +34,7 @@ header button:hover {
     transform: scale(1.05);
     transition: 0.3s;
 }
+
 
 .login-container {
     max-width: 400px;
@@ -80,4 +88,17 @@ header button:hover {
     color: red;
     margin-top: 10px;
     font-weight: bold;
+}
+
+.logo {
+    height: 40px;
+    margin-right: 15px;
+}
+.top-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.top-header h2 {
+    flex-grow: 1; /* para que el título se mantenga centrado */
 }

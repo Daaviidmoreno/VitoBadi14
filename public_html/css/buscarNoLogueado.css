@@ -7,27 +7,32 @@ body {
 
 header {
     width: 100%;
-    padding: 15px 40px; /* más espacio a los lados */
+    padding: 10px 40px; /* menos altura arriba y abajo */
     background: #667eea;
     color: #fff;
     display: flex;
     align-items: center;
-    justify-content: space-between; /* separa título de botones */
+    justify-content: space-between;
     box-sizing: border-box;
+}
+
+/* Logo más pequeño */
+header .logo {
+    height: 35px;
 }
 
 /* Contenedor de botones */
 header .header-botones {
     display: flex;
-    gap: 15px;      /* espacio entre botones */
+    gap: 12px;      /* un poco menos de espacio entre botones */
 }
 
 header button {
     background: #ff416c;
     border: none;
-    padding: 10px 20px;
+    padding: 8px 16px; /* un poco más pequeño que antes */
     color: #fff;
-    border-radius: 10px;
+    border-radius: 8px;
     cursor: pointer;
 }
 

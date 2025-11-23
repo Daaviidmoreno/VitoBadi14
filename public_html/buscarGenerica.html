@@ -1,48 +1,49 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <link rel="icon" type="image/png" href="img/logo.png">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Búsqueda genérica</title>
-    <link rel="stylesheet" href="css/buscarGenerica.css">
-</head>
+    <head>
+        <link rel="icon" type="image/png" href="img/logo.png">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Búsqueda genérica</title>
+        <link rel="stylesheet" href="css/buscarGenerica.css">
+    </head>
 
-<body>
+    <body>
 
-<header class="top-header">
-    <h2>Buscar habitación (Genérica)</h2>
+        <header class="top-header">
+            <img src="img/logo.png" alt="Logo" class="logo">
+            <h2>Buscar habitación (Genérica)</h2>
 
-    <div class="botones-header">
-        <button id="btnAtras">Atrás</button>
-        <button id="btnLogout" class="logout">Logout</button>
-    </div>
-</header>
+            <div class="botones-header">
+                <button id="btnAtras">Atrás</button>
+                <button id="btnLogout" class="logout">Logout</button>
+            </div>
+        </header>
 
-<main class="contenedor">
+        <main class="contenedor">
 
-    <!-- FILTROS -->
-    <div class="filtros">
-        <label for="ciudad">Ciudad:</label>
-        <select id="ciudad">
-            <option value="">-- Selecciona ciudad --</option>
-            <option value="Vitoria">Vitoria</option>
-            <option value="Bilbao">Bilbao</option>
-            <option value="Donosti">Donosti</option>
-        </select>
+            <!-- FILTROS -->
+            <div class="filtros">
+                <label for="ciudad">Ciudad:</label>
+                <select id="ciudad">
+                    <option value="">-- Selecciona ciudad --</option>
+                    <option value="Vitoria">Vitoria</option>
+                    <option value="Bilbao">Bilbao</option>
+                    <option value="Donosti">Donosti</option>
+                </select>
 
-        <label for="fecha">Fecha de entrada:</label>
-        <input type="date" id="fecha">
+                <label for="fecha">Fecha de entrada:</label>
+                <input type="date" id="fecha">
 
-        <button id="btnBuscar" class="buscar">Buscar</button>
-    </div>
+                <button id="btnBuscar" class="buscar">Buscar</button>
+            </div>
 
-    <!-- RESULTADOS -->
-    <div id="resultados" class="resultados"></div>
+            <!-- RESULTADOS -->
+            <div id="resultados" class="resultados"></div>
 
-</main>
+        </main>
 
-<script src="js/buscarGenerica.js" defer></script>
+        <script src="js/buscarGenerica.js" defer></script>
 
-</body>
+    </body>
 </html>

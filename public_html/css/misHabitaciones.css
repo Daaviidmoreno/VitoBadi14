@@ -64,3 +64,16 @@ body {
     object-fit: cover;
     filter: none; /* no borroso aquí, se muestra normal */
 }
+
+.logo {
+    height: 40px;
+    margin-right: 15px;
+}
+.top-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.top-header h2 {
+    flex-grow: 1; /* para que el título se mantenga centrado */
+}

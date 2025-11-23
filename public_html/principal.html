@@ -1,60 +1,61 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <link rel="icon" type="image/png" href="img/logo.png">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página principal</title>
-    <link rel="stylesheet" href="css/principal.css">
-</head>
+    <head>
+        <link rel="icon" type="image/png" href="img/logo.png">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Página principal</title>
+        <link rel="stylesheet" href="css/principal.css">
+    </head>
 
-<body>
+    <body>
 
-<header class="top-header">
-    <h2 class="titulo">Buscar habitación</h2>
+        <header class="top-header">
+            <img src="img/logo.png" alt="Logo" class="logo">
+            <h2 class="titulo">Buscar habitación</h2>
 
-    <div class="info-usuario">
-        <img id="fotoUsuario" class="foto-usuario" alt="Foto usuario">
-        <span id="saludoUsuario"></span>
-    </div>
+            <div class="info-usuario">
+                <img id="fotoUsuario" class="foto-usuario" alt="Foto usuario">
+                <span id="saludoUsuario"></span>
+            </div>
 
-    <button id="btnLogout" class="logout">Logout</button>
-</header>
+            <button id="btnLogout" class="logout">Logout</button>
+        </header>
 
-<h1 class="titulo-principal">Bienvenido a la página principal</h1>
+        <h1 class="titulo-principal">Bienvenido a la página principal</h1>
 
-<main class="main-content">
+        <main class="main-content">
 
-    <!-- MENÚ CONSULTAR -->
-    <div class="menu">
-        <div class="menu-btn">Consultar ▾</div>
-        <div class="submenu">
-            <button id="btnGenerica">Genérica</button>
-            <button id="btnGeo">Geolocalización</button>
-        </div>
-    </div>
+            <!-- MENÚ CONSULTAR -->
+            <div class="menu">
+                <div class="menu-btn">Consultar ▾</div>
+                <div class="submenu">
+                    <button id="btnGenerica">Genérica</button>
+                    <button id="btnGeo">Geolocalización</button>
+                </div>
+            </div>
 
-    <!-- MENÚ HABITACIONES -->
-    <div class="menu">
-        <div class="menu-btn">Habitaciones ▾</div>
-        <div class="submenu">
-            <button id="btnAnadirHab">Añadir</button>
-            <button id="btnMisHab">Mis habitaciones</button>
-        </div>
-    </div>
+            <!-- MENÚ HABITACIONES -->
+            <div class="menu">
+                <div class="menu-btn">Habitaciones ▾</div>
+                <div class="submenu">
+                    <button id="btnAnadirHab">Añadir</button>
+                    <button id="btnMisHab">Mis habitaciones</button>
+                </div>
+            </div>
 
-    <!-- VER SOLICITUDES -->
-    <div class="menu">
-        <div id="btnVerSolicitudes" class="menu-btn">Ver solicitudes</div>
-    </div>
+            <!-- VER SOLICITUDES -->
+            <div class="menu">
+                <div id="btnVerSolicitudes" class="menu-btn">Ver solicitudes</div>
+            </div>
 
-    <!-- VER ALQUILERES -->
-    <div class="menu">
-        <div id="btnVerAlquileres" class="menu-btn">Ver alquileres</div>
-    </div>
+            <!-- VER ALQUILERES -->
+            <div class="menu">
+                <div id="btnVerAlquileres" class="menu-btn">Ver alquileres</div>
+            </div>
 
-</main>
+        </main>
 
-<script src="js/principal.js" defer></script>
-</body>
+        <script src="js/principal.js" defer></script>
+    </body>
 </html>

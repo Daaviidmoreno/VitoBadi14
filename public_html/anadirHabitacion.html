@@ -1,51 +1,52 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <link rel="icon" type="image/png" href="img/logo.png">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Añadir habitación</title>
-    <link rel="stylesheet" href="css/anadirHabitacion.css">
-</head>
+    <head>
+        <link rel="icon" type="image/png" href="img/logo.png">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Añadir habitación</title>
+        <link rel="stylesheet" href="css/anadirHabitacion.css">
+    </head>
 
-<body>
+    <body>
 
-<header class="top-header">
-    <h2>Añadir habitación</h2>
+        <header class="top-header">
+            <img src="img/logo.png" alt="Logo" class="logo">
+            <h2>Añadir habitación</h2>
 
-    <div class="botones-header">
-        <button id="btnAtras">Atrás</button>
-        <button id="btnLogout" class="logout">Logout</button>
-    </div>
-</header>
+            <div class="botones-header">
+                <button id="btnAtras">Atrás</button>
+                <button id="btnLogout" class="logout">Logout</button>
+            </div>
+        </header>
 
-<main class="contenedor">
+        <main class="contenedor">
 
-    <label>Ciudad:</label>
-    <select id="ciudad">
-        <option value="">-- Selecciona ciudad --</option>
-        <option value="Vitoria">Vitoria</option>
-        <option value="Bilbao">Bilbao</option>
-        <option value="Donosti">Donosti</option>
-    </select>
+            <label>Ciudad:</label>
+            <select id="ciudad">
+                <option value="">-- Selecciona ciudad --</option>
+                <option value="Vitoria">Vitoria</option>
+                <option value="Bilbao">Bilbao</option>
+                <option value="Donosti">Donosti</option>
+            </select>
 
-    <input type="hidden" id="latitud">
-    <input type="hidden" id="longitud">
+            <input type="hidden" id="latitud">
+            <input type="hidden" id="longitud">
 
-    <label>Precio (€):</label>
-    <input type="number" id="precio" min="1" placeholder="Ej: 350">
+            <label>Precio (€):</label>
+            <input type="number" id="precio" min="1" placeholder="Ej: 350">
 
-    <label>Imagen:</label>
-    <div id="dropZone">Arrastra aquí la imagen<br>o haz clic</div>
+            <label>Imagen:</label>
+            <div id="dropZone">Arrastra aquí la imagen<br>o haz clic</div>
 
-    <input type="file" id="fileInput" accept="image/*" style="display:none;">
-    <img id="preview">
+            <input type="file" id="fileInput" accept="image/*" style="display:none;">
+            <img id="preview">
 
-    <button id="btnAceptar" class="aceptar">Aceptar</button>
+            <button id="btnAceptar" class="aceptar">Aceptar</button>
 
-</main>
+        </main>
 
-<script src="js/anadirHabitacion.js" defer></script>
+        <script src="js/anadirHabitacion.js" defer></script>
 
-</body>
+    </body>
 </html>
