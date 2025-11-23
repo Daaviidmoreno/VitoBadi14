@@ -51,7 +51,7 @@ function mostrarResultados(lista) {
     const cont = document.getElementById("resultados");
     const template = document.getElementById("templateHabitacion");
 
-// limpia resultados previos
+    // limpia resultados previos
     cont.innerHTML = "";
 
     if (lista.length === 0) {
@@ -67,8 +67,10 @@ function mostrarResultados(lista) {
         img.src = h.imagen || "img/defaultRoom.png"; // si no hay imagen, foto por defecto
         img.alt = "Imagen de habitación";
 
-        // Ciudad y precio
-        clone.querySelector(".hab-ciudad").textContent = h.ciudad;
+        // Aquí cambiamos: mostrar la dirección en vez de la ciudad
+        clone.querySelector(".hab-ciudad").textContent = h.direccion; 
+
+        // Precio
         clone.querySelector(".hab-precio").textContent = h.precio;
 
         // Botón detalles lleva al login
