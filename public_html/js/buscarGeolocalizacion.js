@@ -14,23 +14,10 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = "buscarHabitacionNoLogueado.html";
     });
 
-    document.getElementById("btnBuscar").addEventListener("click", realizarBusqueda);
+    document.getElementById("btnBuscar").addEventListener("click", iniciarBusqueda);
 });
 
-// 1. Función para obtener coordenadas de una dirección (API Nominatim)
-async function obtenerCoords(direccion) {
-    try {
-        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(direccion)}`;
-        const res = await fetch(url);
-        const data = await res.json();
-        if (data && data.length > 0) {
-            return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon) };
-        }
-    } catch (e) { console.error(e); }
-    return null;
-}
-
-// 2. Fórmula de Haversine para distancia en KM
+// --- FÓRMULA DE HAVERSINE (Distancia en KM) ---
 function calcularDistancia(lat1, lon1, lat2, lon2) {
     const R = 6371; 
     const dLat = (lat2 - lat1) * Math.PI / 180;
@@ -42,86 +29,93 @@ function calcularDistancia(lat1, lon1, lat2, lon2) {
     return R * c;
 }
 
-async function realizarBusqueda() {
+// --- OBTENER COORDENADAS (Nominatim) ---
+async function geocodificar(direccion) {
+    try {
+        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(direccion)}`;
+        const res = await fetch(url);
+        const data = await res.json();
+        if (data && data.length > 0) {
+            return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon) };
+        }
+    } catch (e) { console.error(e); }
+    return null;
+}
+
+async function iniciarBusqueda() {
     const dir = document.getElementById("direccionInput").value;
     const radio = parseFloat(document.querySelector('input[name="radio"]:checked').value);
-    const status = document.getElementById("statusBusqueda");
-    const lista = document.getElementById("listaResultados");
-
-    if (!dir) { alert("Escribe una dirección"); return; }
-
-    status.textContent = "Obteniendo coordenadas...";
-    lista.innerHTML = "";
-
-    // Paso 1: Geocodificar dirección origen
-    const coordsOrigen = await obtenerCoords(dir);
+    const estado = document.getElementById("estadoBusqueda");
+    const mapa = document.getElementById("mapaSimulado");
     
-    if (!coordsOrigen) {
-        status.textContent = "Dirección no encontrada.";
+    // Limpiar marcadores previos (dejar solo el punto central)
+    mapa.innerHTML = '<div class="punto-central" title="Tu ubicación"></div>';
+
+    if (!dir) { alert("Introduce una dirección"); return; }
+
+    estado.textContent = "Ubicando dirección...";
+    const centro = await geocodificar(dir);
+
+    if (!centro) {
+        estado.textContent = "Dirección no encontrada.";
         return;
     }
 
-    status.textContent = `Buscando en ${radio} km alrededor de: ${dir}`;
+    estado.textContent = `Buscando en ${radio} km alrededor de: ${dir}`;
 
-    // Paso 2: Obtener habitaciones y filtrar por distancia
+    // Consultar BD
     const req = indexedDB.open("VitoBadi14");
     req.onsuccess = (e) => {
         const db = e.target.result;
-        // Necesitamos Habitaciones y Alquileres (para saber fecha fin)
         const tx = db.transaction(["Habitacion", "Alquiler"], "readonly");
-        
+
         Promise.all([
-            new Promise(r => tx.objectStore("Habitacion").getAll().onsuccess = ev => r(ev.target.result)),
-            new Promise(r => tx.objectStore("Alquiler").getAll().onsuccess = ev => r(ev.target.result))
+            getAll(tx.objectStore("Habitacion")),
+            getAll(tx.objectStore("Alquiler"))
         ]).then(([habitaciones, alquileres]) => {
             
-            const resultados = [];
+            let encontrados = 0;
 
             habitaciones.forEach(hab => {
                 if (hab.latitud && hab.longitud) {
-                    const dist = calcularDistancia(coordsOrigen.lat, coordsOrigen.lon, hab.latitud, hab.longitud);
+                    const dist = calcularDistancia(centro.lat, centro.lon, hab.latitud, hab.longitud);
                     
                     if (dist <= radio) {
-                        // Buscar fecha fin de alquiler
+                        encontrados++;
+                        // Buscar fecha fin alquiler
                         const alq = alquileres.find(a => a.idhabitacion === hab.idhabitacion);
-                        // Si tiene alquiler activo, cogemos la fecha, si no "Disponible"
-                        // Simplificación: tomamos el último alquiler encontrado o disponible
-                        const fechaFin = alq ? alq.fechaFin : "Disponible ahora";
+                        const fechaFin = alq ? alq.fechaFin : "Disponible";
 
-                        hab.distanciaReal = dist;
-                        hab.fechaFinInfo = fechaFin;
-                        resultados.push(hab);
+                        agregarMarcador(mapa, hab, dist, radio, fechaFin);
                     }
                 }
             });
 
-            // Ordenar por distancia
-            resultados.sort((a, b) => a.distanciaReal - b.distanciaReal);
-            mostrarResultados(resultados, lista);
+            if (encontrados === 0) estado.textContent = "No hay habitaciones en ese radio.";
         });
     };
 }
 
-function mostrarResultados(resultados, contenedor) {
-    if (resultados.length === 0) {
-        contenedor.innerHTML = "<p>No se encontraron habitaciones en ese rango.</p>";
-        return;
-    }
+function getAll(store) {
+    return new Promise(r => store.getAll().onsuccess = ev => r(ev.target.result));
+}
 
-    resultados.forEach(hab => {
-        const div = document.createElement("div");
-        div.className = "marcador";
-        div.innerHTML = `
-            <h3 style="margin:0 0 5px 0;">${hab.direccion}</h3>
-            <p><strong>Distancia:</strong> ${hab.distanciaReal.toFixed(2)} km</p>
-            <p style="color:#666; font-size:0.9em;">Clic para ver detalle</p>
-        `;
+function agregarMarcador(mapa, hab, dist, radioMax, fechaFin) {
+    const marcador = document.createElement("div");
+    marcador.className = "marcador-habitacion";
+    
+    // Posicionamiento simulado en el div (centro 50%, dispersión relativa al radio)
+    // Esto es una aproximación visual simple
+    const offsetX = (Math.random() - 0.5) * (dist / radioMax) * 80; 
+    const offsetY = (Math.random() - 0.5) * (dist / radioMax) * 80;
+    
+    marcador.style.left = `calc(50% + ${offsetX}%)`;
+    marcador.style.top = `calc(50% + ${offsetY}%)`;
 
-        // Requisito 33: Al clicar, mostrar precio y fecha final alquiler
-        div.addEventListener("click", () => {
-            alert(`Detalle de Habitación:\n\nPrecio: ${hab.precio} €\nFecha fin alquiler: ${hab.fechaFinInfo}`);
-        });
-
-        contenedor.appendChild(div);
+    // Evento Click (Requisito 34: Precio y Fecha Fin)
+    marcador.addEventListener("click", () => {
+        alert(`🏠 ${hab.direccion}\n💰 Precio: ${hab.precio} €\n📅 Fin Alquiler: ${fechaFin}\n📏 Distancia: ${dist.toFixed(2)} km`);
     });
+
+    mapa.appendChild(marcador);
 }
