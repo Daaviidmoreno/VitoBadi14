@@ -1,21 +1,50 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    // Coordenadas predefinidas
-    const coordenadas = {
-        "Vitoria": { lat: 42.846, lon: -2.672 },
-        "Bilbao": { lat: 43.263, lon: -2.935 },
-        "Donosti": { lat: 43.317, lon: -1.986 }
-    };
+    const selectCiudad = document.getElementById("ciudad");
+    const direccionInput = document.createElement("input");
+    direccionInput.style.marginTop = "10px";
+    direccionInput.id = "direccion";
+    selectCiudad.parentNode.insertBefore(direccionInput, selectCiudad.nextSibling);
 
-    const ciudad = document.getElementById("ciudad");
     const latitud = document.getElementById("latitud");
     const longitud = document.getElementById("longitud");
 
-    ciudad.addEventListener("change", () => {
-        if (ciudad.value) {
-            latitud.value = coordenadas[ciudad.value].lat;
-            longitud.value = coordenadas[ciudad.value].lon;
+    // ---------------------
+    // OBTENER LAT/LON DE DIRECCIÓN REAL
+    // ---------------------
+    async function obtenerCoordenadas(ciudad, direccion) {
+        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(direccion + ", " + ciudad)}`;
+        try {
+            const response = await fetch(url, { headers: { "Accept-Language": "es" } });
+            const data = await response.json();
+            if (data && data.length > 0) {
+                return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon) };
+            } else {
+                return null;
+            }
+        } catch (error) {
+            console.error("Error al geocodificar:", error);
+            return null;
+        }
+    }
+
+    direccionInput.addEventListener("blur", async () => {
+        const ciudad = selectCiudad.value;
+        const direccion = direccionInput.value.trim();
+
+        if (!ciudad || !direccion) {
+            latitud.value = "";
+            longitud.value = "";
+            return;
+        }
+
+        const coords = await obtenerCoordenadas(ciudad, direccion);
+
+        if (coords) {
+            latitud.value = coords.lat;
+            longitud.value = coords.lon;
         } else {
+            alert("No se pudo obtener coordenadas de esa dirección. Asegúrate de que es válida y pertenece a la ciudad seleccionada.");
             latitud.value = "";
             longitud.value = "";
         }
@@ -30,25 +59,15 @@ document.addEventListener("DOMContentLoaded", () => {
     let imagenBase64 = "";
 
     dropZone.addEventListener("click", () => fileInput.click());
-
-    dropZone.addEventListener("dragover", (e) => {
-        e.preventDefault();
-        dropZone.classList.add("hover");
-    });
-
-    dropZone.addEventListener("dragleave", () => {
-        dropZone.classList.remove("hover");
-    });
-
+    dropZone.addEventListener("dragover", (e) => { e.preventDefault(); dropZone.classList.add("hover"); });
+    dropZone.addEventListener("dragleave", () => dropZone.classList.remove("hover"));
     dropZone.addEventListener("drop", (e) => {
         e.preventDefault();
         dropZone.classList.remove("hover");
         procesarImagen(e.dataTransfer.files[0]);
     });
 
-    fileInput.addEventListener("change", () => {
-        procesarImagen(fileInput.files[0]);
-    });
+    fileInput.addEventListener("change", () => procesarImagen(fileInput.files[0]));
 
     function procesarImagen(file) {
         const reader = new FileReader();
@@ -60,12 +79,12 @@ document.addEventListener("DOMContentLoaded", () => {
         reader.readAsDataURL(file);
     }
 
-
     // ---------------------
-    // BOTÓN ACEPTAR → GUARDAR BD
+    // BOTÓN ACEPTAR, GUARDAR EN BD
     // ---------------------
     document.getElementById("btnAceptar").addEventListener("click", () => {
-
+        const ciudad = selectCiudad.value;
+        const direccion = direccionInput.value.trim();
         const precio = parseInt(document.getElementById("precio").value);
         const emailProp = JSON.parse(sessionStorage.getItem("usuarioLogueado"))?.email;
 
@@ -74,8 +93,8 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        if (!ciudad.value || !precio || !imagenBase64) {
-            alert("Rellena todos los campos");
+        if (!ciudad || !direccion || !latitud.value || !longitud.value || !precio || !imagenBase64) {
+            alert("Rellena todos los campos correctamente");
             return;
         }
 
@@ -83,12 +102,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         abrir.onsuccess = (event) => {
             const db = event.target.result;
-
             const tx = db.transaction("Habitacion", "readwrite");
             const store = tx.objectStore("Habitacion");
 
             store.add({
-                ciudad: ciudad.value,
+                ciudad: ciudad,
+                direccion: direccion,
                 latitud: parseFloat(latitud.value),
                 longitud: parseFloat(longitud.value),
                 precio: precio,
@@ -102,7 +121,6 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         };
     });
-
 
     // ---------------------
     // BOTÓN ATRÁS
