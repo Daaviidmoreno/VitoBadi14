@@ -1,68 +1,54 @@
 document.addEventListener("DOMContentLoaded", () => {
-
     const usuario = JSON.parse(sessionStorage.getItem("usuarioLogueado"));
-
-    if (!usuario) {
-        window.location.href = "buscarHabitacionNoLogueado.html";
-        return;
-    }
+    if (!usuario) { window.location.href = "buscarHabitacionNoLogueado.html"; return; }
 
     document.getElementById("btnLogout").addEventListener("click", () => {
         sessionStorage.clear();
         window.location.href = "buscarHabitacionNoLogueado.html";
     });
-
-    document.getElementById("btnAtras").addEventListener("click", () => {
-        window.location.href = "principal.html";
-    });
-
+    document.getElementById("btnAtras").addEventListener("click", () => window.location.href = "principal.html");
     document.getElementById("btnBuscar").addEventListener("click", buscarHabitaciones);
 });
 
 function buscarHabitaciones() {
-
-    const ciudad = document.getElementById("ciudad").value;
-    const fecha = document.getElementById("fecha").value; // por si luego haces algo con ella
-    const resultadosDiv = document.getElementById("resultados");
-    resultadosDiv.innerHTML = "";
-
+    const ciudadSel = document.getElementById("ciudad").value;
+    const fechaSel = document.getElementById("fecha").value;
     const usuario = JSON.parse(sessionStorage.getItem("usuarioLogueado"));
 
     const req = indexedDB.open("VitoBadi14");
 
     req.onsuccess = function (event) {
         const db = event.target.result;
-        const tx = db.transaction("Habitacion", "readonly");
-        const store = tx.objectStore("Habitacion");
+        const tx = db.transaction(["Habitacion", "Alquiler"], "readonly");
 
-        const habitaciones = [];
+        const p1 = new Promise(r => tx.objectStore("Habitacion").getAll().onsuccess = e => r(e.target.result));
+        const p2 = new Promise(r => tx.objectStore("Alquiler").getAll().onsuccess = e => r(e.target.result));
 
-        store.openCursor().onsuccess = function (e) {
-            const cursor = e.target.result;
+        Promise.all([p1, p2]).then(([habitaciones, alquileres]) => {
+            let datos = habitaciones;
 
-            if (cursor) {
-                const hab = cursor.value;
+            // 1. Filtro Ciudad
+            if (ciudadSel) datos = datos.filter(h => h.ciudad === ciudadSel);
 
-                // --- FILTROS ---
-                if (ciudad && hab.ciudad !== ciudad) {
-                    cursor.continue();
-                    return;
-                }
+            // 2. Excluir mis propias habitaciones
+            datos = datos.filter(h => h.emailPropietario !== usuario.email);
 
-                // NO mostrar habitaciones cuyo propietario es el usuario logueado
-                if (hab.emailPropietario === usuario.email) {
-                    cursor.continue();
-                    return;
-                }
-
-                habitaciones.push(hab);
-                cursor.continue();
-            } else {
-                
-                habitaciones.sort((a, b) => a.precio - b.precio);
-                mostrarResultados(habitaciones);
+            // 3. Filtro Fecha Real
+            if (fechaSel) {
+                const fechaBuscada = new Date(fechaSel);
+                datos = datos.filter(h => {
+                    const estaOcupada = alquileres.some(alquiler => {
+                        return alquiler.idhabitacion === h.idhabitacion && new Date(alquiler.fechaFin) >= fechaBuscada;
+                    });
+                    return !estaOcupada;
+                });
             }
-        };
+
+            // 4. Ordenar Precio: Menor a Mayor
+            datos.sort((a, b) => a.precio - b.precio);
+
+            mostrarResultados(datos);
+        });
     };
 }
 
@@ -78,17 +64,13 @@ function mostrarResultados(lista) {
     lista.forEach(hab => {
         const card = document.createElement("div");
         card.className = "card";
-
-        const img = hab.imagen && hab.imagen !== "" ? hab.imagen : "img/noFoto.png";
-
+        // Foto visible normal
         card.innerHTML = `
-            <img src="${img}">
-            <p><strong>Ciudad:</strong> ${hab.ciudad}</p>
-            <p><strong>Latitud:</strong> ${hab.latitud}</p>
-            <p><strong>Longitud:</strong> ${hab.longitud}</p>
+            <div class="imagen-container"><img class="hab-imagen" src="${hab.imagen || 'img/noFoto.png'}"></div>
+            <p><strong>Dirección:</strong> ${hab.direccion}</p>
+            <p><strong>Latitud:</strong> ${hab.latitud} | <strong>Longitud:</strong> ${hab.longitud}</p>
             <p><strong>Precio:</strong> ${hab.precio} €</p>
         `;
-
         cont.appendChild(card);
     });
 }
