@@ -35,7 +35,7 @@ function buscarHabitaciones() {
             }
 
             // Ordenar de mayor a menor precio
-            datos.sort((a, b) => b.precio - a.precio);
+            datos.sort((a, b) => a.precio - b.precio);
 
             mostrarResultados(datos);
         };
