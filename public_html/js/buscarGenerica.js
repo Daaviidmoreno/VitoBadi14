@@ -27,13 +27,13 @@ function buscarHabitaciones() {
         Promise.all([p1, p2]).then(([habitaciones, alquileres]) => {
             let datos = habitaciones;
 
-            // 1. Filtro Ciudad
+            // Filtro Ciudad
             if (ciudadSel) datos = datos.filter(h => h.ciudad === ciudadSel);
 
-            // 2. Excluir mis propias habitaciones
+            // Excluir mis propias habitaciones
             datos = datos.filter(h => h.emailPropietario !== usuario.email);
 
-            // 3. Filtro Fecha Real
+            // Filtro Fecha Real
             if (fechaSel) {
                 const fechaBuscada = new Date(fechaSel);
                 datos = datos.filter(h => {
@@ -44,7 +44,7 @@ function buscarHabitaciones() {
                 });
             }
 
-            // 4. Ordenar Precio: Menor a Mayor
+            // Ordenar Precio: Menor a Mayor
             datos.sort((a, b) => a.precio - b.precio);
 
             mostrarResultados(datos);

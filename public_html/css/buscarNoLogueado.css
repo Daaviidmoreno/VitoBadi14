@@ -30,7 +30,7 @@ header .header-botones {
 header button {
     background: #ff416c;
     border: none;
-    padding: 8px 16px; /* un poco más pequeño que antes */
+    padding: 8px 16px; 
     color: #fff;
     border-radius: 8px;
     cursor: pointer;

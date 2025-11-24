@@ -198,8 +198,8 @@ function crearBD() {
 
 
         //Alquileres
-        alquilerStore.add({idhabitacion: 2, emailInquilino: "ana@mail.com", fechaInicio: "2024-01-01", fechaFin: "2024-12-31"});
-        alquilerStore.add({idhabitacion: 7, emailInquilino: "maria@mail.com", fechaInicio: "2024-02-01", fechaFin: "2024-08-31"});
+        alquilerStore.add({idhabitacion: 2, emailInquilino: "ana@mail.com", fechaInicio: "2025-12-10", fechaFin: "2025-12-31"});
+        alquilerStore.add({idhabitacion: 7, emailInquilino: "maria@mail.com", fechaInicio: "2025-12-01", fechaFin: "2025-12-11"});
 
 
         // Tabla Solicitud

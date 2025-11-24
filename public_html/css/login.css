@@ -7,7 +7,7 @@ body {
 
 header {
     width: 100%;
-    padding: 12px 40px; /* un poco más pequeño que antes */
+    padding: 12px 40px; 
     display: flex;
     align-items: center;
     justify-content: space-between; /* logo a la izquierda, botón a la derecha */

@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // BOTÓN LOGOUT
     document.getElementById("btnLogout").addEventListener("click", () => {
-        sessionStorage.clear(); // borrar sesión por completo
+        sessionStorage.clear(); 
         window.location.href = "buscarHabitacionNoLogueado.html";
     });
 
