@@ -3,58 +3,36 @@
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
 Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/html.html to edit this template
 -->
-<html>
+<!DOCTYPE html>
+<html lang="es">
 <head>
     <link rel="icon" type="image/png" href="img/logo.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Geolocalización</title>
     <link rel="stylesheet" href="css/buscarGenerica.css">
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
     <style>
-        /* Estilos específicos para el "mapa" simulado */
-        .mapa-container {
-            border: 2px solid #ccc;
-            background-color: #e8e8e8;
-            height: 300px;
-            position: relative;
+        #mapa {
+            height: 400px;
+            width: 100%;
             margin-top: 20px;
             border-radius: 8px;
-            overflow: hidden;
+            border: 2px solid #ccc;
+            z-index: 1; /* Asegura que se quede por debajo de menús desplegables */
         }
-        .punto-central {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 20px; height: 20px;
-            background-color: blue;
-            border-radius: 50%;
-            border: 2px solid white;
-            box-shadow: 0 0 5px rgba(0,0,0,0.5);
-            z-index: 10;
-        }
-        .marcador-habitacion {
-            position: absolute;
-            width: 16px; height: 16px;
-            background-color: red;
-            border-radius: 50%;
-            border: 2px solid white;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .marcador-habitacion:hover {
-            transform: scale(1.5);
-            z-index: 20;
+        .filtros {
+            background: white; padding: 20px; border-radius: 12px; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         .radio-inputs {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            justify-content: center;
-            margin-top: 10px;
-            background: white;
-            padding: 10px;
-            border-radius: 8px;
+            display: flex; gap: 15px; align-items: center; justify-content: center;
+            margin-top: 15px;
         }
+        .radio-inputs label { cursor: pointer; }
     </style>
 </head>
 <body>
@@ -69,16 +47,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/html.html to edit this
 </header>
 
 <main class="contenedor">
-
-    <div class="filtros" style="display: block;">
-        <label>Dirección origen:</label>
+    <div class="filtros">
         <div style="display: flex; gap: 10px;">
-            <input type="text" id="direccionInput" placeholder="Ej: Facultad de Farmacia, Vitoria" style="flex: 1;">
+            <input type="text" id="direccionInput" placeholder="Ej: Facultad de Farmacia, Vitoria" style="flex: 1; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
             <button id="btnBuscar" class="buscar">Buscar</button>
         </div>
 
         <div class="radio-inputs">
-            <span>Radio (Km):</span>
+            <strong>Radio (Km):</strong>
             <label><input type="radio" name="radio" value="0.5" checked> 0.5</label>
             <label><input type="radio" name="radio" value="1"> 1.0</label>
             <label><input type="radio" name="radio" value="1.5"> 1.5</label>
@@ -86,13 +62,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/html.html to edit this
         </div>
     </div>
 
-    <h3 id="estadoBusqueda" style="margin-top: 10px;">Resultados en el mapa:</h3>
+    <h3 id="estadoBusqueda" style="margin-top: 20px; color: #444;">Resultados en el mapa:</h3>
     
-    <div id="mapaSimulado" class="mapa-container">
-        <div class="punto-central" title="Tu ubicación"></div>
-        </div>
-
-    <div id="listaResultados" class="resultados" style="margin-top: 20px;"></div>
+    <div id="mapa"></div>
 
 </main>
 
