@@ -1,7 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
     const usuario = JSON.parse(sessionStorage.getItem("usuarioLogueado"));
-    if (!usuario) { window.location.href = "buscarHabitacionNoLogueado.html"; return; }
+    if (!usuario) { 
+        window.location.href = "buscarHabitacionNoLogueado.html"; 
+        return; 
+    }
 
+    // Evitar seleccionar fechas pasadas
+    const fechaInput = document.getElementById("fecha");
+    const hoy = new Date().toISOString().split("T")[0];
+    fechaInput.setAttribute("min", hoy);
+
+    // Botones
     document.getElementById("btnLogout").addEventListener("click", () => {
         sessionStorage.clear();
         window.location.href = "buscarHabitacionNoLogueado.html";
@@ -17,7 +26,7 @@ function buscarHabitaciones() {
 
     const req = indexedDB.open("VitoBadi14");
 
-    req.onsuccess = function (event) {
+    req.onsuccess = function(event) {
         const db = event.target.result;
         const tx = db.transaction(["Habitacion", "Alquiler"], "readonly");
 
@@ -27,24 +36,25 @@ function buscarHabitaciones() {
         Promise.all([p1, p2]).then(([habitaciones, alquileres]) => {
             let datos = habitaciones;
 
-            // Filtro Ciudad
+            // 1. Filtrar por ciudad
             if (ciudadSel) datos = datos.filter(h => h.ciudad === ciudadSel);
 
-            // Excluir mis propias habitaciones
+            // 2. Excluir mis propias habitaciones
             datos = datos.filter(h => h.emailPropietario !== usuario.email);
 
-            // Filtro Fecha Real
+            // 3. Filtrar por fecha
             if (fechaSel) {
                 const fechaBuscada = new Date(fechaSel);
                 datos = datos.filter(h => {
                     const estaOcupada = alquileres.some(alquiler => {
-                        return alquiler.idhabitacion === h.idhabitacion && new Date(alquiler.fechaFin) >= fechaBuscada;
+                        return alquiler.idhabitacion === h.idhabitacion &&
+                               new Date(alquiler.fechaFin) >= fechaBuscada;
                     });
                     return !estaOcupada;
                 });
             }
 
-            // Ordenar Precio: Menor a Mayor
+            // 4. Ordenar por precio ascendente
             datos.sort((a, b) => a.precio - b.precio);
 
             mostrarResultados(datos);
@@ -64,9 +74,10 @@ function mostrarResultados(lista) {
     lista.forEach(hab => {
         const card = document.createElement("div");
         card.className = "card";
-        // Foto visible normal
         card.innerHTML = `
-            <div class="imagen-container"><img class="hab-imagen" src="${hab.imagen || 'img/noFoto.png'}"></div>
+            <div class="imagen-container">
+                <img class="hab-imagen" src="${hab.imagen || 'img/noFoto.png'}">
+            </div>
             <p><strong>Dirección:</strong> ${hab.direccion}</p>
             <p><strong>Latitud:</strong> ${hab.latitud} | <strong>Longitud:</strong> ${hab.longitud}</p>
             <p><strong>Precio:</strong> ${hab.precio} €</p>

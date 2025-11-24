@@ -1,4 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // Evitar seleccionar fechas pasadas
+    const fechaInput = document.getElementById("fecha");
+    const hoy = new Date().toISOString().split("T")[0];
+    fechaInput.setAttribute("min", hoy);
+
     document.getElementById("btnLogin").addEventListener("click", () => window.location.href = "login.html");
     document.getElementById("btnAtras").addEventListener("click", () => window.history.back());
     document.getElementById("btnBuscar").addEventListener("click", buscarHabitaciones);
@@ -10,9 +15,8 @@ function buscarHabitaciones() {
 
     const req = indexedDB.open("VitoBadi14");
 
-    req.onsuccess = function (event) {
+    req.onsuccess = function(event) {
         const db = event.target.result;
-
         const tx = db.transaction(["Habitacion", "Alquiler"], "readonly");
 
         const p1 = new Promise(r => tx.objectStore("Habitacion").getAll().onsuccess = e => r(e.target.result));
@@ -22,9 +26,7 @@ function buscarHabitaciones() {
             let datos = habitaciones;
 
             // Filtro por ciudad
-            if (ciudadSel) {
-                datos = datos.filter(h => h.ciudad === ciudadSel);
-            }
+            if (ciudadSel) datos = datos.filter(h => h.ciudad === ciudadSel);
 
             // Filtro por fecha
             if (fechaSel) {
@@ -37,7 +39,7 @@ function buscarHabitaciones() {
                 });
             }
 
-            // Ordenar por precio de menor a mayor
+            // Ordenar por precio
             datos.sort((a, b) => a.precio - b.precio);
 
             mostrarResultados(datos);
@@ -57,11 +59,9 @@ function mostrarResultados(lista) {
     }
 
     lista.forEach(h => {
-        // Crear tarjeta
         const card = document.createElement("div");
         card.className = "card";
 
-        // Imagen
         const imgContainer = document.createElement("div");
         imgContainer.className = "imagen-container";
         const img = document.createElement("img");
@@ -69,26 +69,18 @@ function mostrarResultados(lista) {
         img.src = h.imagen || "img/noFoto.png";
         imgContainer.appendChild(img);
 
-        // Dirección
         const pCiudad = document.createElement("p");
         pCiudad.innerHTML = `<strong>Dirección:</strong> ${h.direccion}`;
 
-        // Precio
         const pPrecio = document.createElement("p");
         pPrecio.innerHTML = `<strong>Precio:</strong> ${h.precio} €`;
 
-        // Botón Detalles
         const btn = document.createElement("button");
         btn.textContent = "Ver detalles";
         btn.className = "btnDetalles";
-        btn.addEventListener("click", () => {
-            window.location.href = "login.html";
-        });
+        btn.addEventListener("click", () => window.location.href = "login.html");
 
-        // Añadir todos los elementos a la tarjeta
         card.append(imgContainer, pCiudad, pPrecio, btn);
-
-        // Añadir tarjeta al contenedor
         cont.appendChild(card);
     });
 }
