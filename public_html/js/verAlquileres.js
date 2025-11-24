@@ -65,52 +65,44 @@ function renderizar(usuario, habitaciones, alquileres) {
         return;
     }
 
-    // Ordenar por fecha fin
+    // Ordenar por fecha de fin
     listaAMostrar.sort((a, b) => new Date(a.fechaFin) - new Date(b.fechaFin));
 
     listaAMostrar.forEach(alq => {
         const habitacion = habitaciones.find(h => h.idhabitacion === alq.idhabitacion);
         if (!habitacion) return;
 
-        // Crear tarjeta
         const card = document.createElement("div");
         card.className = "card";
 
-        // Imagen
         const imgContainer = document.createElement("div");
         imgContainer.className = "imagen-container";
+
         const img = document.createElement("img");
         img.className = "hab-imagen";
         img.src = habitacion.imagen || "img/noFoto.png";
         imgContainer.appendChild(img);
 
-        // Dirección
         const pDireccion = document.createElement("p");
         pDireccion.innerHTML = `<strong>Dirección:</strong> ${habitacion.direccion}`;
 
-        // Precio
         const pPrecio = document.createElement("p");
         pPrecio.innerHTML = `<strong>Precio:</strong> ${habitacion.precio} €`;
 
-        // Fechas
         const pFechas = document.createElement("p");
-        pFechas.style.color = "#555";
+        pFechas.classList.add("texto-fechas");
         pFechas.innerHTML = `Del <span>${alq.fechaInicio}</span> al <span>${alq.fechaFin}</span>`;
 
-        // Extra (Propietario o Inquilino)
         const pExtra = document.createElement("p");
-        pExtra.style.fontWeight = "bold";
-        pExtra.style.color = "#4e60dd";
+        pExtra.classList.add("texto-extra");
+
         if (esPropietario) {
             pExtra.textContent = `Inquilino: ${alq.emailInquilino}`;
         } else {
             pExtra.textContent = `Propietario: ${habitacion.emailPropietario}`;
         }
 
-        // Añadir elementos a la tarjeta
         card.append(imgContainer, pDireccion, pPrecio, pFechas, pExtra);
-
-        // Añadir tarjeta al contenedor
         contenedor.appendChild(card);
     });
 }

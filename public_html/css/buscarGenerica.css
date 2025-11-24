@@ -1,9 +1,10 @@
-body {
+body { 
     margin: 0;
     background: #f5f5f5;
     font-family: 'Roboto', sans-serif;
 }
 
+/* HEADER */
 .top-header {
     display: flex;
     justify-content: space-between;
@@ -11,6 +12,11 @@ body {
     padding: 15px 30px;
     background: #667eea;
     color: white;
+}
+
+.logo {
+    height: 40px;
+    margin-right: 15px;
 }
 
 .botones-header button {
@@ -26,16 +32,30 @@ body {
     color: white;
 }
 
+/* CONTENEDOR */
 .contenedor {
     width: 90%;
     margin: 30px auto;
 }
 
-.filtros {
+/* FILTROS */
+.filtros-mapa {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.barra-busqueda {
     display: flex;
-    gap: 20px;
-    align-items: center;
-    margin-bottom: 25px;
+    gap: 10px;
+}
+
+.barra-busqueda input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
 }
 
 .buscar {
@@ -46,40 +66,25 @@ body {
     border-radius: 8px;
 }
 
-.resultados {
+/* RADIO BUTTONS */
+.radio-inputs {
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.card {
-    width: 260px;
-    background: white;
-    border-radius: 12px;
-    padding: 15px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-}
-
-.card img {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-    border-radius: 10px;
-}
-
-.card p {
-    margin: 6px 0;
-}
-
-.logo {
-    height: 40px;
-    margin-right: 15px;
-}
-.top-header {
-    display: flex;
+    gap: 15px;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    margin-top: 15px;
 }
-.top-header h2 {
-    flex-grow: 1; /* para que el título se mantenga centrado */
+
+.radio-inputs label {
+    cursor: pointer;
+}
+
+/* MAPA */
+#mapa {
+    height: 400px;
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 8px;
+    border: 2px solid #ccc;
+    z-index: 1;
 }

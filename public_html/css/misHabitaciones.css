@@ -77,3 +77,13 @@ body {
 .top-header h2 {
     flex-grow: 1; /* para que el título se mantenga centrado */
 }
+
+.texto-fechas {
+    color: #555;
+}
+
+.texto-extra {
+    font-weight: bold;
+    color: #4e60dd;
+}
+
