@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Filtrar solo las del usuario logueado
             habitaciones = habitaciones.filter(h => h.emailPropietario === usuarioLogueado.email);
 
-            
+            // Ordenar por precio
             habitaciones.sort((a, b) => a.precio - b.precio);
 
             mostrarResultados(habitaciones);
@@ -42,26 +42,53 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function mostrarResultados(lista) {
         const cont = document.getElementById("resultados");
-        const template = document.getElementById("templateHabitacion");
-
         cont.innerHTML = ""; // limpiar resultados previos
 
         if (lista.length === 0) {
-            cont.innerHTML = "<h3>No tienes habitaciones registradas</h3>";
+            const mensaje = document.createElement("h3");
+            mensaje.textContent = "No tienes habitaciones registradas";
+            cont.appendChild(mensaje);
             return;
         }
 
         lista.forEach(h => {
-            const clone = template.content.cloneNode(true);
+            // Crear tarjeta
+            const card = document.createElement("div");
+            card.className = "card";
 
-            clone.querySelector(".hab-imagen").src = h.imagen || "";
-            clone.querySelector(".hab-ciudad").textContent = h.ciudad;
-            clone.querySelector(".hab-direccion").textContent = h.direccion;
-            clone.querySelector(".hab-latitud").textContent = h.latitud;
-            clone.querySelector(".hab-longitud").textContent = h.longitud;
-            clone.querySelector(".hab-precio").textContent = h.precio;
+            // Imagen
+            const imgContainer = document.createElement("div");
+            imgContainer.className = "imagen-container";
+            const img = document.createElement("img");
+            img.className = "hab-imagen";
+            img.src = h.imagen || "";
+            imgContainer.appendChild(img);
 
-            cont.appendChild(clone);
+            // Ciudad
+            const pCiudad = document.createElement("p");
+            pCiudad.innerHTML = `<strong>Ciudad:</strong> ${h.ciudad}`;
+
+            // Dirección
+            const pDireccion = document.createElement("p");
+            pDireccion.innerHTML = `<strong>Dirección:</strong> ${h.direccion}`;
+
+            // Latitud
+            const pLatitud = document.createElement("p");
+            pLatitud.innerHTML = `<strong>Latitud:</strong> ${h.latitud}`;
+
+            // Longitud
+            const pLongitud = document.createElement("p");
+            pLongitud.innerHTML = `<strong>Longitud:</strong> ${h.longitud}`;
+
+            // Precio
+            const pPrecio = document.createElement("p");
+            pPrecio.innerHTML = `<strong>Precio:</strong> ${h.precio} €`;
+
+            // Añadir todo a la tarjeta
+            card.append(imgContainer, pCiudad, pDireccion, pLatitud, pLongitud, pPrecio);
+
+            // Añadir tarjeta al contenedor
+            cont.appendChild(card);
         });
     }
 

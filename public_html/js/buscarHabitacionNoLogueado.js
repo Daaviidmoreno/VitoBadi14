@@ -12,33 +12,32 @@ function buscarHabitaciones() {
 
     req.onsuccess = function (event) {
         const db = event.target.result;
-        // Abrir transacción múltiple para cruzar datos
+
         const tx = db.transaction(["Habitacion", "Alquiler"], "readonly");
-        
+
         const p1 = new Promise(r => tx.objectStore("Habitacion").getAll().onsuccess = e => r(e.target.result));
         const p2 = new Promise(r => tx.objectStore("Alquiler").getAll().onsuccess = e => r(e.target.result));
 
         Promise.all([p1, p2]).then(([habitaciones, alquileres]) => {
             let datos = habitaciones;
 
-            // 1. Filtro Ciudad
+            // Filtro por ciudad
             if (ciudadSel) {
                 datos = datos.filter(h => h.ciudad === ciudadSel);
             }
 
-            // 2. Filtro Fecha (Cruzar con Alquileres)
+            // Filtro por fecha
             if (fechaSel) {
                 const fechaBuscada = new Date(fechaSel);
                 datos = datos.filter(h => {
-                    // ¿Tiene algún alquiler que termine DESPUÉS de mi fecha de entrada?
-                    const estaOcupada = alquileres.some(alquiler => {
-                        return alquiler.idhabitacion === h.idhabitacion && new Date(alquiler.fechaFin) >= fechaBuscada;
-                    });
-                    return !estaOcupada; // Si no está ocupada, la mostramos
+                    const estaOcupada = alquileres.some(alquiler => 
+                        alquiler.idhabitacion === h.idhabitacion && new Date(alquiler.fechaFin) >= fechaBuscada
+                    );
+                    return !estaOcupada;
                 });
             }
 
-            // 3. Ordenar Precio: Menor a Mayor
+            // Ordenar por precio de menor a mayor
             datos.sort((a, b) => a.precio - b.precio);
 
             mostrarResultados(datos);
@@ -48,28 +47,48 @@ function buscarHabitaciones() {
 
 function mostrarResultados(lista) {
     const cont = document.getElementById("resultados");
-    const template = document.getElementById("templateHabitacion");
     cont.innerHTML = "";
 
     if (lista.length === 0) {
-        cont.innerHTML = "<h3>No hay resultados disponibles.</h3>";
+        const mensaje = document.createElement("h3");
+        mensaje.textContent = "No hay resultados disponibles.";
+        cont.appendChild(mensaje);
         return;
     }
 
     lista.forEach(h => {
-        const clone = template.content.cloneNode(true);
-        
-        // Imagen borrosa para no logueados
-        const img = clone.querySelector(".hab-imagen");
-        img.src = h.imagen || "img/noFoto.png"; 
-        
-        clone.querySelector(".hab-ciudad").textContent = h.direccion; 
-        clone.querySelector(".hab-precio").textContent = h.precio;
+        // Crear tarjeta
+        const card = document.createElement("div");
+        card.className = "card";
 
-        clone.querySelector(".btnDetalles").addEventListener("click", () => {
+        // Imagen
+        const imgContainer = document.createElement("div");
+        imgContainer.className = "imagen-container";
+        const img = document.createElement("img");
+        img.className = "hab-imagen";
+        img.src = h.imagen || "img/noFoto.png";
+        imgContainer.appendChild(img);
+
+        // Dirección
+        const pCiudad = document.createElement("p");
+        pCiudad.innerHTML = `<strong>Dirección:</strong> ${h.direccion}`;
+
+        // Precio
+        const pPrecio = document.createElement("p");
+        pPrecio.innerHTML = `<strong>Precio:</strong> ${h.precio} €`;
+
+        // Botón Detalles
+        const btn = document.createElement("button");
+        btn.textContent = "Ver detalles";
+        btn.className = "btnDetalles";
+        btn.addEventListener("click", () => {
             window.location.href = "login.html";
         });
 
-        cont.appendChild(clone);
+        // Añadir todos los elementos a la tarjeta
+        card.append(imgContainer, pCiudad, pPrecio, btn);
+
+        // Añadir tarjeta al contenedor
+        cont.appendChild(card);
     });
 }

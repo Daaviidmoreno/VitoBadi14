@@ -1,40 +1,27 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <link rel="icon" type="image/png" href="img/logo.png">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Mis Habitaciones</title>
-        <link rel="stylesheet" href="css/misHabitaciones.css">
-    </head>
-    <body>
+<head>
+    <link rel="icon" type="image/png" href="img/logo.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Habitaciones</title>
+    <link rel="stylesheet" href="css/misHabitaciones.css">
+</head>
+<body>
 
-        <header class="top-header">
-            <img src="img/logo.png" alt="Logo" class="logo">
-            <h2>Mis Habitaciones</h2>
-            <div class="botones-header">
-                <button id="btnAtras">Atrás</button>
-                <button id="btnLogout" class="logout">Logout</button>
-            </div>
-        </header>
+    <header class="top-header">
+        <img src="img/logo.png" alt="Logo" class="logo">
+        <h2>Mis Habitaciones</h2>
+        <div class="botones-header">
+            <button id="btnAtras">Atrás</button>
+            <button id="btnLogout" class="logout">Logout</button>
+        </div>
+    </header>
 
-        <main class="contenedor">
-            <div id="resultados" class="resultados"></div>
+    <main class="contenedor">
+        <div id="resultados" class="resultados"></div>
+    </main>
 
-            <template id="templateHabitacion">
-                <div class="card">
-                    <div class="imagen-container">
-                        <img class="hab-imagen" src="" alt="Imagen habitación">
-                    </div>
-                    <p><strong>Ciudad:</strong> <span class="hab-ciudad"></span></p>
-                    <p><strong>Dirección:</strong> <span class="hab-direccion"></span></p>
-                    <p><strong>Latitud:</strong> <span class="hab-latitud"></span></p>
-                    <p><strong>Longitud:</strong> <span class="hab-longitud"></span></p>
-                    <p><strong>Precio:</strong> <span class="hab-precio"></span> €</p>
-                </div>
-            </template>
-        </main>
-
-        <script src="js/misHabitaciones.js" defer></script>
-    </body>
+    <script src="js/misHabitaciones.js" defer></script>
+</body>
 </html>

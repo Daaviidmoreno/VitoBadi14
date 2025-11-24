@@ -1,12 +1,11 @@
-/* 
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/javascript.js to edit this template
- */
-
 document.addEventListener("DOMContentLoaded", () => {
     const usuario = JSON.parse(sessionStorage.getItem("usuarioLogueado"));
-    if (!usuario) { window.location.href = "login.html"; return; }
+    if (!usuario) { 
+        window.location.href = "login.html"; 
+        return; 
+    }
 
+    // Botones
     document.getElementById("btnAtras").addEventListener("click", () => window.location.href = "principal.html");
     document.getElementById("btnLogout").addEventListener("click", () => {
         sessionStorage.clear();
@@ -20,7 +19,6 @@ function cargarSolicitudes(usuario) {
     const req = indexedDB.open("VitoBadi14");
     req.onsuccess = (e) => {
         const db = e.target.result;
-        // Necesitamos 3 tablas
         const tx = db.transaction(["Habitacion", "Solicitud", "Usuario"], "readonly");
         
         Promise.all([
@@ -50,53 +48,65 @@ function renderizar(usuario, habitaciones, solicitudes, usuarios) {
     if (esPropietario) {
         titulo.textContent = "Solicitudes Recibidas";
         const misIds = misHabitaciones.map(h => h.idhabitacion);
-        // Solicitudes para mis habitaciones
         lista = solicitudes.filter(s => misIds.includes(s.idhabitacion));
     } else {
         titulo.textContent = "Mis Solicitudes Enviadas";
-        // Solicitudes hechas por mí
         lista = solicitudes.filter(s => s.emailInquilinoPosible === usuario.email);
     }
 
     if (lista.length === 0) {
-        contenedor.innerHTML = "<h3>No hay solicitudes.</h3>";
+        const mensaje = document.createElement("h3");
+        mensaje.textContent = "No hay solicitudes.";
+        contenedor.appendChild(mensaje);
         return;
     }
 
     lista.forEach(sol => {
         const hab = habitaciones.find(h => h.idhabitacion === sol.idhabitacion);
-        if(!hab) return;
+        if (!hab) return;
 
+        // Crear tarjeta
         const card = document.createElement("div");
         card.className = "card";
-        
-        let htmlBase = `
-            <div class="imagen-container"><img class="hab-imagen" src="${hab.imagen}"></div>
-            <p><strong>Dirección:</strong> ${hab.direccion}</p>
-            <p><strong>Precio:</strong> ${hab.precio} €</p>
-        `;
+
+        // Imagen
+        const imgContainer = document.createElement("div");
+        imgContainer.className = "imagen-container";
+        const img = document.createElement("img");
+        img.className = "hab-imagen";
+        img.src = hab.imagen || "img/noFoto.png";
+        imgContainer.appendChild(img);
+
+        // Dirección
+        const pDireccion = document.createElement("p");
+        pDireccion.innerHTML = `<strong>Dirección:</strong> ${hab.direccion}`;
+
+        // Precio
+        const pPrecio = document.createElement("p");
+        pPrecio.innerHTML = `<strong>Precio:</strong> ${hab.precio} €`;
+
+        card.append(imgContainer, pDireccion, pPrecio);
 
         if (esPropietario) {
-            // Botón especial para ver quién solicita (Requisito 50)
-            htmlBase += `<button class="btn-detalle" style="background:#4e60dd; color:white; padding:8px; border:none; border-radius:5px; cursor:pointer; margin-top:10px;">Ver posible inquilino</button>`;
-        } else {
-            htmlBase += `<p><strong>Propietario:</strong> ${hab.emailPropietario}</p>`;
-        }
+            // Botón para ver inquilino
+            const btnDetalle = document.createElement("button");
+            btnDetalle.className = "btn-detalle";
+            btnDetalle.textContent = "Ver posible inquilino";
 
-        card.innerHTML = htmlBase;
-
-        // Funcionalidad del botón para el propietario
-        if (esPropietario) {
-            const btn = card.querySelector(".btn-detalle");
-            btn.addEventListener("click", () => {
+            btnDetalle.addEventListener("click", () => {
                 const inquilino = usuarios.find(u => u.email === sol.emailInquilinoPosible);
                 if (inquilino) {
-                    // Podrías hacer un modal, pero un alert detallado es suficiente para cumplir
                     alert(`Detalles del Inquilino:\n\nNombre: ${inquilino.nombre}\nEmail: ${inquilino.email}`);
                 } else {
                     alert("Usuario no encontrado");
                 }
             });
+
+            card.appendChild(btnDetalle);
+        } else {
+            const pPropietario = document.createElement("p");
+            pPropietario.innerHTML = `<strong>Propietario:</strong> ${hab.emailPropietario}`;
+            card.appendChild(pPropietario);
         }
 
         contenedor.appendChild(card);
